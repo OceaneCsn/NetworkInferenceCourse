@@ -1,0 +1,104 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fourier}
+\usetheme{Madrid}
+
+\useoutertheme{miniframes} % Alternatively: miniframes, infolines, split
+\useinnertheme{circles}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667} % UBC Blue (primary)
+\definecolor{UBCgrey}{rgb}{0.3686, 0.5255, 0.6235} % UBC Grey (secondary)
+
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+
+
+\definecolor{lightmelon}{HTML}{FFEDE3}
+\definecolor{alertcolor}{HTML}{6FCD9B}
+
+\setbeamercolor{block title alerted}{fg=white,bg=Melon}
+\setbeamercolor{block body alerted}{fg=black!90,bg=lightmelon}
+\setbeamercolor{block title example}{fg=white,bg=alertcolor}
+
+
+% Override palette coloring with secondary
+\setbeamercolor{subsection in head/foot}{bg=UBCgrey,fg=white}
+
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[L'inférence statistique de GRN]{Méthodes statistiques pour l'inférence de réseaux de régulation}
+\date{\today}
+\author[Sophie Lèbre, Océane Cassan]
+{\textbf{Sophie Lèbre, Océane Cassan} \\ sophie.lebre@umontpellier.fr\\ oceane.cassan@cnrs.fr }
+\institute[]{Formation réseaux de régulation, IRD}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}
+		\tableofcontents
+	\end{frame}
+	
+	
+
+   % \include{regression_files/GRN-intro}
+    
+\section{Réseaux orientés et causalité}
+
+    	%\include{regression_files/co-expression-methods}
+    	
+
+   
+      \include{coursMarie-Laure_files/causalite}
+  	
+\section{Inférence de GRN par régression}
+
+
+
+
+    \include{coursMarie-Laure_files/regression-intro}
+    
+    
+    
+    \include{coursMarie-Laure_files/regression-methods}
+    
+    
+\section{Validation}
+    
+    
+    \include{coursMarie-Laure_files/validation}
+	
+	
+\section{Perspectives}
+
+	\include{coursMarie-Laure_files/perspectives}
+
+
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \setbeamertemplate{bibliography item}[triangle]
+    \scriptsize
+    \bibliographystyle{apalike}
+    \bibliography{biblio}
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,186 @@
+
+
+\subsection{Qu'est-ce qu'une régression?}
+
+	\begin{frame}{Qu'est-ce qu'une régression?}
+	La régression est une procédure statistique visant à établir la relation entre
+	
+		\begin{enumerate}
+		    \item Une \textbf{variable d'intérêt}, également désignée comme variable réponse ou variable dépendante
+		    
+		    \item Une ou plusieurs \textbf{variables prédictives}, également désignées comme covariables, prédicteurs, ou variables indépendantes
+		\end{enumerate}
+	\end{frame}
+	
+	
+	\begin{frame}{Qu'est-ce qu'une régression?}
+	La régression est une procédure statistique visant à établir la relation entre
+	
+		\begin{enumerate}
+		    \item Une \textbf{variable d'intérêt} $Y$ : vecteur d'observations de la réponse
+		    
+		    \item Une ou plusieurs \textbf{variables prédictives} $X$ :  vecteur ou matrice de prédicteurs pour chaque observation
+		\end{enumerate}
+		Le lien entre $X$ et $Y$ se fait au moyen d'une fonction $f$, estimée lors de la procédure de régression, telle que:
+		\Large
+		\begin{equation*}
+		    Y_i = \textcolor{orange}{\textbf{f}}(X_i) + \epsilon_i
+		\end{equation*}
+		\small
+		Avec $i$ allant de 1 à $N$, et $\epsilon_i$ l'erreur (ou résidus) du modèle, soit la variation de $Y$ non expliquée par les prédicteurs $X$.
+
+	\end{frame}
+	
+	
+	\begin{frame}{Exemple de régression sur la biomasse de plantes}
+
+		\begin{enumerate}
+		    \item Une \textbf{variable d'intérêt} $Y$ : la \textbf{biomasse} d'Arabidopsis thaliana \includegraphics[scale = 0.041]{Figures/Intro/Arabidopsis.jpg}
+		
+		    
+		    \item Une ou plusieurs \textbf{variables prédictives} $X$ :  \textbf{L'apport en nitrate, la température, l'humidité}, etc.
+		\end{enumerate}
+
+		\begin{equation*}
+		    Biomasse_i = \textcolor{orange}{\textbf{f}}(Nitrate_i, Temperature_i) + \epsilon_i
+		\end{equation*}
+		
+		Dans le cas d'une régression linéaire :
+		\begin{equation*}
+    	    Biomasse_i = \textcolor{orange}{\textbf{a}} + \textcolor{orange}{\textbf{b}}Nitrate_i +\textcolor{orange}{\textbf{c}}Temperature_i + \epsilon_i
+    	\end{equation*}
+		
+		\small
+		Avec $i$ une plante du jeu de données, et $\epsilon_i$ la variation de biomasse non expliquée par les prédicteurs
+
+	\end{frame}
+	
+	
+	\begin{frame}{Représentation graphique}
+	Cas d'une régression \textbf{linéaire} à un prédicteur : $Y_i = \textcolor{orange}{\textbf{a}} + \textcolor{orange}{\textbf{b}}X_i + \epsilon_i$
+	
+	\vspace{0.5cm}
+	\includegraphics[scale=0.275]{Figures/Intro/regressionLine.png}
+	\end{frame}
+	
+	
+	\begin{frame}{Remarques}
+	\vspace{-0.8cm}
+	\begin{equation*}
+    	    Biomasse_i = \textcolor{orange}{\textbf{a}} + \textcolor{orange}{\textbf{b}}Nitrate_i +\textcolor{orange}{\textbf{c}}Temperature_i + \epsilon_i
+    	\end{equation*}
+
+    	\textbf{Avantages de la régression : }
+    	
+    	
+    	\begin{itemize} \scriptsize
+    	\item Prédire la réponse pour un nouveau set de variables à l'outcome inconnu
+    	    \item Quantification du pouvoir prédicteur de chaque variable d'entrée (ex: valeur du coefficient, et test sur la significativité de ce coefficient.)
+    	\end{itemize}
+    	
+    	\onslide<2>
+    	
+    	
+    	\vspace{0.5cm}
+    	
+    	\textbf{Extensions de la régression linéaire utiles dans notre contexte : }
+    	
+    	
+    	
+    	\begin{itemize} \scriptsize
+    	
+    	\item Pénaliser l'estimation des coefficients afin de faire de la sélection de variables en grande dimension (ex: lasso)
+    	
+    	\item La fonction $f$ n'est pas nécessairement une combinaison linéaire du type $\textcolor{orange}{\textbf{a}} + \textcolor{orange}{\textbf{b}}X1_i + \textcolor{orange}{\textbf{c}}X2_i$, mais peut prendre la forme des arbres de régression, des fonctions non linéaires plus adaptées à des questions biologiques complexes
+
+    	\end{itemize}
+    	
+    	
+	\end{frame}
+
+\subsection{Application aux réseaux de gènes}
+
+	
+	\begin{frame}{Principe de l'application aux réseaux de gènes}
+    	\vspace{-0.4cm}
+    	\begin{center}
+    	    \includegraphics[scale = 0.3]{Figures/Intro/network.PNG}
+    	\end{center}
+    	
+    	\begin{center}
+    	\scriptsize 
+    	$g_{1i}, g_{2i}$ : niveaux d'expression des régulateurs transcriptionels dans la condition $i$
+    	
+    	$g_{3i}$  : niveaux d'expression d'un gène cible dans la condition $i$
+    	\end{center}
+    	\vspace{-0.15cm}
+    	\Large
+    	\begin{equation*}
+    	    g_{3i} = \textcolor{orange}{\textbf{f}}(g_{1i}, g_{2i}) + \epsilon_i
+    	\end{equation*}
+	\end{frame}
+	
+	
+	\begin{frame}{Principe de l'application aux réseaux de régulation}
+    	
+    	\begin{center}
+    	\scriptsize 
+    	$regulators_{i}$ : niveaux d'expression des régulateurs transcriptionels dans la condition $i$
+    	
+    	$target_{i}$  : niveaux d'expression d'un gène cible dans la condition $i$
+    	\end{center}
+    	\vspace{-0.15cm}
+    	
+    	
+    	\begin{block}{}
+    	\begin{equation*}
+    	    target_{i} = \textcolor{orange}{\textbf{f}}(regulators_{i}) + \epsilon_i
+    	\end{equation*}
+    	\end{block}
+    	\vspace{0.25cm}
+
+    	\scriptsize 
+    	
+    	
+    	\textbf{La procédure de construction de réseau est la suivante} : 
+    	
+    	\begin{enumerate}
+    	    \item Pour chaque gène du jeu de données, ajuster à partir des valeurs d'expression la fonction \textcolor{orange}{\textbf{f}}
+    	    \item Extraire de \textcolor{orange}{\textbf{f}} les scores (ou valeur d'influence, importance, pouvoir prédictif) des régulateurs sur chaque gène du jeu de données 
+    	    \item Sélectionner les scores régulateurs-gènes cibles les plus forts pour construire le réseau final
+    	\end{enumerate}
+    	
+	\end{frame}
+	
+	
+\begin{frame}{Principe de l'application aux réseaux de régulation}
+    	
+    	\begin{center}
+    	\scriptsize 
+    	$regulators_{i}$ : niveaux d'expression des régulateurs transcriptionels dans la condition $i$
+    	
+    	$target_{i}$  : niveaux d'expression d'un gène cible dans la condition $i$
+    	\end{center}
+    	\vspace{-0.15cm}
+    	
+    	\begin{block}{}
+    	\begin{equation*}
+    	    target_{i} = \textcolor{orange}{\textbf{f}}(regulators_{i}) + \epsilon_i
+    	\end{equation*}
+    	\end{block}
+    	\vspace{0.25cm}
+
+    	\scriptsize 
+    	Les méthodes basées sur la régression pour inférerer des GRN se différencient par leur choix de modélisation pour $f$.
+    	Deux sont présentées dans ce cours : 
+    	\vspace{0.25cm}
+    	
+    	\begin{itemize}
+    	    \item \textcolor{orange}{TIGRESS} : Régression linéaire pénalisée avec sélection de stabilité \cite{haury2012tigress}
+    	    \item \textcolor{orange}{GENIE3} : Arbres de régression en random forests \cite{genie3}
+    	\end{itemize}
+\end{frame}
+	
+
+
+

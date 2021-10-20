@@ -1,0 +1,230 @@
+\section{Exemples de méthodes}
+
+\subsection{TIGRESS}
+	
+\begin{frame}{TIGRESS : approche basée sur la régression linéaire}
+
+L'expression d'un gène cible peut être modélisée par une \textbf{combinaison linéaire} de l'expression des facteurs de transcription :
+    \onslide<2->
+    
+    \begin{equation*}
+    	   target_i = \textcolor{orange}{\beta_{target,1}}.TF1_i + \textcolor{orange}{\beta_{target,2}}.TF2_i + ... + \textcolor{orange}{\beta_{target,M}}.TFM_i  + \epsilon_i
+    \end{equation*}
+    
+Avec $TFM_i$ le niveau d'expression du TF numéro M dans la condition $i$.
+\vspace{0.3cm}
+
+\onslide<3-> 
+
+\begin{alertblock}{\small Problème : il faut \textbf{refléter la sparsité du problème biologique}}
+\small L'expression d'un gène est sensée être expliquée par un nombre limité de TFs, et non tous les TFs du jeu de données $\rightarrow$ \textbf{LARS} (Least-angle regression) :
+Créer un modèle avec les L TFs qui donnent les meilleures prédictions, $L<M$
+\end{alertblock}
+
+\end{frame}
+
+
+
+% \begin{frame}{TIGRESS : Modéliser la sparsité}
+
+% \begin{alertblock}{\small Problème : il faut \textbf{refléter la sparsité du problème biologique}}
+% \small L'expression d'un gène est sensée être expliquée par un nombre limité de TFs, et non tous les TFs du jeu de données $\rightarrow$ \textbf{LARS} (Least-angle regression)
+% \end{alertblock}
+
+% \scriptsize
+% La méthode LARS fonctionne (dans le principe) comme suit :
+
+% \begin{enumerate}\small 
+%     \item Commencer par le modèle nul : $target_i = \alpha + \epsilon_i$
+%     \item Choisir le $TF_j$ pour lequel la corrélation à $target$ est maximale : $target_i = \alpha + \textcolor{orange}{\beta_{target,j}}.TFj_i + \epsilon_i$
+%     \item Continuer à ajouter des TFs en choisissant à chaque fois le TF maximisant la prédiction de $target$
+%     \item S'arrêter lorsque l'on a atteint le nombre de TFs prédicteurs jugé suffisant, ici $L < M$.
+% \end{enumerate}
+
+% \scriptsize
+% On termine alors avec le modèle suivant, consitué de uniquement L TFs contre M, sans contrainte de spasite : 
+%  $target_i = \textcolor{orange}{\beta_{target,1}}.TF1_i + \textcolor{orange}{\beta_{target,2}}.TF2_i + ... + \textcolor{orange}{\beta_{target,L}}.TFL_i  + \epsilon_i$
+
+
+% \end{frame}
+	
+\begin{frame}{TIGRESS : étapes de la procédure}
+	\vspace{-0.3cm}
+	\begin{overprint}
+	 \onslide<1> \includegraphics[scale=0.35]{Figures/Regression/tigress_1-1.pdf}
+	 \onslide<2> \includegraphics[scale=0.35]{Figures/Regression/tigress_2-2.pdf}
+	 \onslide<3> \includegraphics[scale=0.35]{Figures/Regression/tigress_3-3.pdf}
+	 \onslide<4> \includegraphics[scale=0.35]{Figures/Regression/tigress_4-end.pdf}
+	 
+	\end{overprint}
+\end{frame}
+	
+	
+
+
+
+
+
+\subsection{GENIE3}
+
+
+
+
+\begin{frame}{GENIE3 : approche basée sur les arbres de régression}
+
+L'expression d'un gène cible peut être modélisée par une \textbf{combinaison non linéaire} de l'expression des TFs:
+
+    \onslide<2->
+    
+    \begin{equation*}
+    	   target_i = \textcolor{orange}{Random Forest}(TF_i) + \epsilon_i
+    \end{equation*}
+\scriptsize{(On n'a pas de formulation mathématique pour le modèle d'un random forest, qui fonctionne très différemment d'une régression linéaire)}
+
+\small 
+Avec $TF_i$ le niveau d'expression de tous les TFs du jeu de données dans la condition $i$.
+
+
+
+\begin{block}{\small Avantages par rapport au modèle linéaire}
+\begin{itemize}\scriptsize
+    \item Peut modéliser des non linéarités dans l'influence de l'expression des régulateurs (ex: le carré de l'expression d'un régulateur, etc)
+    \item Peut modéliser des relations de coopération et d'interactions entre TFs
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+
+\begin{frame}{GENIE3 : approche basée sur les arbres de régression}
+
+
+\small Un arbre de régression est construit en choisissant \textbf{des seuils et conditions sur les variables prédictives}.
+%Le choix des conditions et seuils sur les variables est fait itérativment, en maximisant la réduction de variabilité de la variable réponse engendrée par l'ajout d'une coniditon.
+
+\begin{columns}
+\begin{column}{.45\textwidth}
+\includegraphics[scale = 0.2]{Figures/Regression/regressionTree.png}
+\end{column}
+\begin{column}{.45\textwidth}
+\small Ajustement d'un arbre de régression
+\begin{enumerate}\scriptsize
+    \item Choisir la variable et la condition sur cette variable qui permettent de discriminer au mieux les valeurs de la réponse (la variance de la réponse est diminuée)
+    \item Réitérer en créant de nouvelles branches, jusqu'à épuisement des variables, ou atteinte de la profondeur d'arbre maximale
+\end{enumerate}
+\end{column}
+\end{columns}
+\vspace{0.5cm}
+
+\onslide<2>
+\scriptsize \textbf{Random Forest} : un grand nombre d'arbres de régression sont ajustés sur des données échantillonnées légèrement différemment les unes des autres $\rightarrow$ leur consensus permet plus de robustesse dans les prédictions (apprentissage ensembliste)
+
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{GENIE3: étapes de la procédure}
+    \small \textbf{Classer les régulateurs} suivant leur \textbf{influence} sur l'expression des autres gènes
+    \vspace{-0.2cm}
+    \begin{center}
+        \begin{overprint}
+        \onslide<1>\includegraphics[scale = 0.38]{Figures/Regression/rf1.png}
+        \onslide<2>\includegraphics[scale = 0.38]{Figures/Regression/rf2.png}
+        \onslide<3>\includegraphics[scale = 0.38]{Figures/Regression/rf3.png}
+        \onslide<4->\includegraphics[scale = 0.38]{Figures/Regression/rf4.png}
+    \end{overprint}
+    \end{center}
+\end{frame}
+
+
+
+
+\begin{frame}
+    \frametitle{\small Construire un réseau à partir d'un classement de la régulation}
+    \vspace{-0.2cm}
+   %     \begin{overprint}
+        \begin{itemize}\scriptsize
+            \item  Choisir un \textbf{seuil} et garder les interactions qui lui sont supérieures $\rightarrow$ arbitraire
+             \onslide<2->\item Utiliser des données de validation et choisir un seuil qui maximise un critère d'évaluation du réseau $\rightarrow$ données rarement disponibles
+             \onslide<3->\item  Définir une approche de tests statistiques et de \textbf{contrôle du FDR} sur le réseau prédit 
+            
+            \includegraphics[scale = 0.33]{Figures/Regression/method.png} \cite{Cassan2021}
+        \end{itemize}
+        
+%    \end{overprint}
+\end{frame}
+
+
+
+
+%\begin{frame}{DIANE \scriptsize \cite{Cassan2021}  \includegraphics[scale= 0.12]{Figures/Regression/hex-DIANE.png}}
+
+%\scriptsize \textbf{Dashboard for the Inference and Analysis of Networks from Expression data}
+
+%\scriptsize L'outil que vous pourrez lors des sessions pratiques pour aller de données d'expression brutes jusqu'à l'inférence et l'analyses de réseau avec GENIE3.
+
+%\vspace{0.5cm}
+%\centering
+%\includegraphics[scale = 0.18]{Figures/Regression/view_net.PNG}
+
+%\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{L'inférence de réseaux sur données cinétiques par régression}
+
+\begin{block}{}
+\center \textbf{GENIE3} model \cite{genie3}
+\end{block}
+
+\vspace{0.5cm}
+
+\center
+$x_{target,i} = \textcolor{Emerald}{f_{target}}(\textbf{x}_{reg,i})$
+
+\vspace{0.5cm}
+$\left\{
+    \begin{array}{lll}
+        x_{target,i} : \text{\scriptsize expression of a \textbf{target gene} in condition i} \\
+        \textcolor{Emerald}{f_{target}} : \text{\scriptsize complex, potentially non linear function estimated by Random Forests} \\
+        \textbf{x}_{reg,i}: \text{\scriptsize expression vector of \textbf{regulators} in condition i} 
+    \end{array}
+\right$
+\end{frame}
+
+
+\begin{frame}
+\frametitle{L'inférence de réseaux sur données cinétiques par régression}
+
+\begin{block}{}
+\center \textbf{dynGENIE3} model \cite{geurts2018dyngenie3}
+\end{block}
+
+
+\center
+$\frac{x_{target}(t+\Delta t) - x_{target}(t)}{\Delta t} = \textcolor{Emerald}{f_{target}}(\textbf{x}_{reg}(t)) - \alpha_{target}x_{target}(t) + \epsilon_{t} $
+
+\vspace{0.5cm}
+$\left\{
+    \begin{array}{llll}
+        x_{target}(t) : \text{\scriptsize expression of a \textbf{target gene} at time t} \\
+        \textcolor{Emerald}{f_{target}} : \text{\scriptsize complex, potentially non linear function estimated by \textbf{Random Forests}} \\
+        \textbf{x}_{reg}(t): \text{\scriptsize expression vector of \textbf{regulators} at time t} \\
+        \alpha_{target}: \text{\scriptsize decay rate for the target gene transcripts} 
+    \end{array}
+\right$
+
+\vspace{0.5cm}
+\scriptsize Autres méthodes aux schémas temporels très proches $+$ intégration de priors dans l'inférence: 
+
+\begin{itemize}\scriptsize
+    \item \textbf{Outpredict} (regression par Random Forests) \cite{Cirrone2020}
+    \item \textbf{The Inferelator} (regression linéaire pénalisée) \cite{Gibbs2021}
+\end{itemize}
+
+\end{frame}

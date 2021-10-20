@@ -1,0 +1,123 @@
+\section{Perspectives}
+
+
+\begin{frame}{Principe de la régression pour les réseaux de régulation}
+	
+	\begin{center}
+	\scriptsize 
+	$regulators_{i}$ : niveaux d'expression des régulateurs transcriptionels dans la condition $i$
+	
+	$target_{i}$  : niveaux d'expression d'un gène cible dans la condition $i$
+	\end{center}
+	\vspace{-0.15cm}
+	
+	
+	\begin{block}{}
+	\begin{equation*}
+	    target_{i} = \textcolor{orange}{\textbf{f}}(regulators_{i}) + \epsilon_i
+	\end{equation*}
+	\end{block}
+	\vspace{0.25cm}
+
+	\scriptsize 
+	
+	
+	\textbf{La procédure de construction de réseau est la suivante} : 
+	
+	\begin{enumerate}
+	    \item Pour chaque gène du jeu de données, ajuster à partir des valeurs d'expression la fonction \textcolor{orange}{\textbf{f}}
+	    \item Extraire de \textcolor{orange}{\textbf{f}} les scores (ou valeur d'influence, importance, pouvoir prédictif) des régulateurs sur chaque gène du jeu de données 
+	    \item Sélectionner les scores régulateurs-gènes cibles les plus forts pour construire le réseau final
+	\end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}{DIANE \scriptsize \cite{Cassan2021} }
+
+\scriptsize \textbf{Dashboard for the Inference and Analysis of Networks from Expression data} \includegraphics[scale= 0.10]{Figures/Regression/hex-DIANE.png}
+
+\scriptsize L'outil que vous utiliserez lors des TP-TD pour aller de données d'expression brutes jusqu'à l'inférence et l'analyses de réseau avec GENIE3.
+
+\includegraphics[scale = 0.2]{Figures/Regression/view_net.PNG}
+
+\end{frame}
+
+
+
+\subsection{Analyse et validation de réseaux}
+
+
+
+\begin{frame}{Analyser la topologie d'un réseau : détection de modules}
+
+\begin{itemize}
+    \item \small \textbf{Communautés} de gènes densément connectés, contenant des éventuels enrichissements ontologiques. \tiny{Conrad et al, BMC Syst. Biology 2018}
+    \center
+     \includegraphics[scale = 0.195]{Figures/analyse/modules.png} 
+     
+    
+\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}{Analyser la topologie d'un réseau inféré : connectivité}
+
+\begin{itemize}
+ \item \small \textbf{Degré - centralité} : Les gènes montrant une connectivité remarquable dans le réseau sont de potentiels régulateurs clés
+ 
+ \center
+     \includegraphics[scale = 0.17]{Figures/analyse/rankingTF.png}
+    
+\end{itemize}
+
+\end{frame}
+
+
+% conclusion / synthèse
+
+
+\begin{frame}{Inférer des réseaux de régulation : un tâche encore complexe}
+	
+	\begin{enumerate}
+	    \item Problème en grande dimension
+	    
+	    \includegraphics[scale=0.2]{Figures/Intro/shadowplay.png}
+	    
+	    
+	    \item Manque de données de validation complètes et sûres pour étalonner les méthodes
+	\end{enumerate}
+
+\end{frame}
+
+
+
+
+\begin{frame}{Combiner plusieurs approches d'inférence}
+
+\scriptsize En 2012, les challenges \textbf{DREAM} ont évalué et combiné l'état de l'art des méthodes d'inférence  et conclu à un apport significatif de la combinaison de plusieurs méthodes [Marbach et al., 2012]
+
+\centering
+\includegraphics[scale = 0.38]{Figures/Regression/dream5.png}
+\end{frame}
+
+
+
+\begin{frame}{Utilité de ces analyses pour la biologie des systèmes}
+
+\textbf{L'analyse des réseaux inférés peut permettre de:}
+    \begin{itemize} \small
+    \item Conforter et approfondir des connaissances existantes en biologie des systèmes
+        \item Découvrir de nouveaux gènes candidats contrôlant des réponses d'intérêt, après validation expérimentale et étude fonctionnelle
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \begin{alertblock}{Accomplissements de l'inférence de réseaux}
+	Meilleure compréhension des systèmes vivants, solutions pour améliorer la résilience d'un organisme à une contrainte environnementale ou à des pathologies
+	\end{alertblock}
+	
+    
+\end{frame}
+	
+
