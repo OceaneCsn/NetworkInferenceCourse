@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+
+\title{\textbf{Projet CNRTS}}
+
+\begin{document}
+
+\cite{geurts2018dyngenie3, Cirrone2020,  Gibbs2021}
+
+\cite{haury2012tigress}
+
+
+Statistical network inference will be supported by solid biological and experimental foundations: 
+(i) the combination of multiple sources of genomic data (publicly available DAP-seq, CHIP-seq, or in-planta regulation assays \cite{Brooks2020}, as well as the ATAC-seq generated at the occasion of this project) will complement RNA-seq data in order to guide the inference process or to evaluate its performances,
+(ii) the use of biological prior such as the knowledge of the regulator genes for A. thaliana (as already experimented in \cite{Cassan2021}) or the knowledge of potential regulatory signals between roots and shoots, and
+(iii) a rich multifactorial experimental design combining 2 qualitative variables (the tissue and the N nutrition) to a quantitative variable (C02 concentration) sampled at a fine resolution.
+
+A refined mathematical modeling, and associated statistical inference methods (including splines fitting \cite{moanin}, ensembles of regression trees \cite{genie3}, multitask learning \cite{bonneaux}, breakpoint detection \cite{LebreEtal2010}, information sharing \cite{DondelingerEtal2012,DondelingerEtal2013}, …), will be developed to link precisely the inferred regulatory network with the gradient of CO2 concentrations. Modeling will consider various assumptions such as smooth variation or rapid changes, each one possibly specific to a given context (tissue/N nutrition). To our knowledge, such network reconstruction associated with a quantitative environmental variable (which is different from time) has not been considered yet. Moreover, the envisioned predictive models will be designed with a focus on extracting causal links in the data rather than correlation, a task at which modern machine-learning for systems biology still needs to improve \cite{lecca2021}.
+
+\newpage
+
+\bibliographystyle{apalike}
+\bibliography{biblio.bib}
+
+\end{document}
